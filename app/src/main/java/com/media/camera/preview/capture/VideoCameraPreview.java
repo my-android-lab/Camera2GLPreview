@@ -270,7 +270,11 @@ public class VideoCameraPreview extends SurfaceView implements SurfaceHolder.Cal
                 }
                 StreamConfigurationMap streamConfigs = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
                 if (streamConfigs != null) {
-                    mOutputSizes = Arrays.asList(streamConfigs.getOutputSizes(SurfaceTexture.class));
+                    Size[] sizes = streamConfigs.getOutputSizes(SurfaceTexture.class);
+                    if (sizes == null) {
+                        continue;
+                    }
+                    mOutputSizes = Arrays.asList(sizes);
                 }
                 mSensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
                 mCameraId = cameraId;
